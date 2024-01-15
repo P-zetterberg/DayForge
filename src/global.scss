@@ -1,0 +1,44 @@
+:root {
+--border-radius: 10px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: #f5f6f8;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1em;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  * {
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    p,span,label {
+      font-size: 14px;
+    }
+  }
+  // main {
+  //   height: calc(100vh - 89.9px);
+  // }
+  .clr-field button {
+    // width: 100% !important;
+    height: 100% !important;
+ 
+  }
+  // .clr-field {
+  //   & {
+  //     border: 1px solid lightgrey;
+  //   }
+  // }
+  h1 {
+    margin-top: 0.5em;
+  }
+main {
+  flex: 1;
+  margin-bottom: 3em;
+  margin-top: 3em;
+}

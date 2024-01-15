@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="48" viewBox="0 0 48 48">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #c2ebd1;
+      }
+
+      .cls-2 {
+        font-size: 50px;
+        fill: #1e1e1f;
+        font-family: "Microsoft PhagsPa";
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <image id="Layer_0" data-name="Layer 0" width="48" height="48" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAUklEQVRoge3PAQ3AMAzAsH78Ofcwskk2guTb3Z2HnZfjx8AFDNQM1AzUDNQM1AzUDNQM1AzUDNQM1AzUDNQM1AzUDNQM1AzUDNQM1AzUDKRm5gcbUwRcCefcaQAAAABJRU5ErkJggg=="/>
+  <rect class="cls-1" width="83" height="83"/>
+  <text id="O" class="cls-2" x="5" y="41.5">O</text>
+</svg>
