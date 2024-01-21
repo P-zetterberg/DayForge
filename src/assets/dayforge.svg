@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="80" viewBox="0 0 300 80">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f7ca50;
+      }
+
+      .cls-2 {
+        font-size: 75px;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #1e1e1f;
+        font-family: "Microsoft PhagsPa";
+        font-weight: 700;
+      }
+
+      .cls-3 {
+        font-size: 50px;
+      }
+    </style>
+  </defs>
+  <rect id="dayforgeYellow" class="cls-1" width="83" height="83"/>
+  <text id="Lorem_Ipsum" data-name="Lorem Ipsum" class="cls-2" x="563.001" y="55">Lorem Ipsum</text>
+  <text id="D" class="cls-2" x="12" y="68">D</text>
+  <text id="ayforge" class="cls-3" x="88.5" y="56.5">ayForge</text>
+</svg>

@@ -1,29 +1,26 @@
 <script>
-  import { goto } from "$app/navigation";
-  import { createClient } from "@supabase/supabase-js";
-  import { onMount } from "svelte";
-
-  const supabaseUrl = "https://foebhsyjevotvveomyop.supabase.co";
-  //This key is safe to expose on the client
-  const supabaseKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvZWJoc3lqZXZvdHZ2ZW9teW9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczNzA2ODYsImV4cCI6MjAxMjk0NjY4Nn0.scxVcnN2Q1Gx2cK38o-zn4sdUAy21Z63pRwaphbVLO0";
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  import { enhance } from "$app/forms";
+  import { supabaseClient } from "$lib/supabase";
 
   let email = "pontus@zetterberg.io";
   let password = "qew123w2";
-  let message = "";
 
-  async function handleLogin() {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-      let status = data?.user ? 200 : 401;
-      let resData = status === 200 ? data : error;
-    } catch (error) {}
-  }
-  onMount(async () => {});
+  const signInWithProvider = async (provider) => {
+    const { data, error } = await supabaseClient.auth.signInWithOAuth({
+      provider: provider,
+    });
+  };
+
+  const submitSocialLogin = async ({ action, cancel }) => {
+    switch (action.searchParams.get("provider")) {
+      case "google":
+        await signInWithProvider("google");
+        break;
+      default:
+        break;
+    }
+    cancel();
+  };
 </script>
 
 <main>
@@ -53,9 +50,14 @@
         />
         <a href="/reset-password" class="forgot">Forgot password?</a>
       </div>
-
       <button class="submit" type="submit">Sign in</button>
     </form>
+    <!-- use:enhance={submitSocialLogin} -->
+    <form method="POST">
+      <button formaction="?/login&provider=apple">Apple</button>
+      <button formaction="?/login&provider=google">Google</button>
+    </form>
+
     <span class="login__redirect"
       >Don't have an account? <a href="/register">Sign up here</a></span
     >

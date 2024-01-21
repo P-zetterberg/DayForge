@@ -1,9 +1,13 @@
 <script>
   import "../global.scss";
-  //import brandLogo from "../assets/opinioly_small_height.svg"
+  import brandLogo from "../assets/dayforge.svg";
   import Waves from "../assets/waves2.svelte";
+  import { page } from "$app/stores";
 
   export let data;
+  data.session = true;
+
+  let userCredits = 0;
 </script>
 
 <svelte:head>
@@ -19,24 +23,40 @@
   />
 </svelte:head>
 <nav>
-  <a href={!data?.session ? "/" : "/dashboard"}>
-    <!-- <img src={brandLogo} width="150" alt="brand logo" class="logo" /> -->
+  <a href={!data?.session ? "/" : "/"}>
+    <img src={brandLogo} width="150" alt="brand logo" class="logo" />
   </a>
   <div class="nav__items">
-    {#if !data?.session}
-      <a href="/">My days</a>
-    {:else}
-      {data?.session?.user?.email}
+    {#if data?.session}
+      <a
+        href="/generate"
+        class:active={$page.url.pathname.includes("/generate")}>Generate</a
+      >
+
+      <a
+        href="/how-to-use"
+        class:active={$page.url.pathname.includes("/how-to-use")}>How to use</a
+      >
+      <a
+        href="/examples"
+        class:active={$page.url.pathname.includes("/examples")}>Examples</a
+      >
+      <a href="/profile" class:active={$page.url.pathname.includes("/profile")}
+        >Profile</a
+      >
     {/if}
   </div>
   {#if data?.session}
-    <form action="/logout" method="POST">
+    <!-- <form action="/logout" method="POST">
       <button style="height:25px ;" type="submit">Logout</button>
-    </form>
-    <h4 class="welcome">
+    </form> -->
+
+    <span>{userCredits} {userCredits === 1 ? "credit" : "credits"} left</span>
+    <a class="signup buy__credits" href="/buy">Buy credits</a>
+    <!-- <div class="profile">
       Profile
       <span class="material-symbols-outlined icon"> expand_more </span>
-    </h4>
+    </div> -->
   {:else}
     <div class="nav__ctas">
       <a href="/login">Sign in</a>
@@ -49,15 +69,15 @@
 
 <Waves />
 
-<!-- <footer>
-  <a href="/policy">Privacy policy</a>
-  <span>|</span>
-  <a href="/tos">Terms & conditions</a>
-</footer> -->
-
 <style lang="scss">
-  h4 {
+  div.profile {
+    transition: color 0.2s ease-in-out;
     margin: 0;
+    margin-left: 1em;
+    color: rgba(22, 22, 22, 0.699);
+    &:hover {
+      color: black;
+    }
   }
   nav {
     display: flex;
@@ -68,6 +88,7 @@
     font-family: "Poppins", sans-serif;
     font-weight: 500;
     font-size: 1rem;
+    z-index: 999;
 
     a {
       transition: color 0.2s ease-in-out;
@@ -76,16 +97,27 @@
       &:hover {
         color: black;
       }
+      &.active {
+        border-bottom: solid 5px var(--primary-color);
+        color: black;
+      }
     }
   }
   .logo {
     cursor: pointer;
   }
   .nav__items {
+    border-radius: var(--border-radius);
+    padding: 0.5em 2em;
     display: flex;
     gap: 2em;
     margin: 0 auto;
+    box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 1);
+    border: 2px solid black;
+    background-color: #fcfcfc;
   }
+
   .nav__ctas {
     display: flex;
     gap: 2em;
@@ -99,25 +131,30 @@
     border-radius: var(--border-radius);
     padding: 0.5em 1em;
     color: black;
+    font-weight: 600;
+    box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 1);
+    border: 2px solid black;
+    position: relative;
+    transition-property: box-shadow, top, left;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    top: 0;
+    left: 0;
     &:hover {
-      opacity: 0.85;
+      top: 4px;
+      left: 4px;
+      box-shadow: 1px 1px 0 #000;
+      transition-property: box-shadow, top, left;
+      transition-duration: 0.2s;
+      transition-timing-function: ease-in-out;
+    }
+    &.buy__credits {
+      margin-left: 1em;
     }
   }
-  .welcome {
+  .profile {
     display: flex;
     cursor: pointer;
-  }
-  footer {
-    z-index: 99;
-    position: static;
-    bottom: 0;
-    left: 10px;
-    a,
-    span {
-      text-decoration: none;
-      color: black;
-      opacity: 0.3;
-      font-size: 12px;
-    }
   }
 </style>

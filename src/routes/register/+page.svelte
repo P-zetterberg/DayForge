@@ -1,41 +1,6 @@
 <script>
-  import { goto } from "$app/navigation";
-  import { createClient } from "@supabase/supabase-js";
-  import { redirect } from "@sveltejs/kit";
-
-  const supabaseUrl = "https://foebhsyjevotvveomyop.supabase.co";
-  //This key is safe to expose on the client
-  const supabaseKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvZWJoc3lqZXZvdHZ2ZW9teW9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczNzA2ODYsImV4cCI6MjAxMjk0NjY4Nn0.scxVcnN2Q1Gx2cK38o-zn4sdUAy21Z63pRwaphbVLO0";
-  const supabase = createClient(supabaseUrl, supabaseKey);
-
   let email = "pontus@zetterberg.io";
   let password = "qew123w2";
-
-  async function handleRegister() {
-    try {
-      const response = await fetch("http://localhost:3000/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-
-      if (response.ok) {
-        const { data, error: err } = await supabase.auth.signInWithPassword({
-          email: email,
-          password: password,
-        });
-        if (err) {
-          goto("/login");
-        } else throw redirect(303, "/dashboard");
-      }
-    } catch (error) {}
-  }
 </script>
 
 <main>

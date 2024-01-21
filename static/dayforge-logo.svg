@@ -2,7 +2,7 @@
   <defs>
     <style>
       .cls-1 {
-        fill: #c2ebd1;
+        fill: #f7ca50;
       }
 
       .cls-2 {
@@ -14,6 +14,7 @@
     </style>
   </defs>
   <image id="Layer_0" data-name="Layer 0" width="48" height="48" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAUklEQVRoge3PAQ3AMAzAsH78Ofcwskk2guTb3Z2HnZfjx8AFDNQM1AzUDNQM1AzUDNQM1AzUDNQM1AzUDNQM1AzUDNQM1AzUDNQM1AzUDKRm5gcbUwRcCefcaQAAAABJRU5ErkJggg=="/>
-  <rect class="cls-1" width="83" height="83"/>
-  <text id="O" class="cls-2" x="5" y="41.5">O</text>
+  <rect id="yellow" class="cls-1" width="83" height="83"/>
+  <text id="Lorem_Ipsum" data-name="Lorem Ipsum" class="cls-2" x="301" y="-77">Lorem Ipsum</text>
+  <text id="D" class="cls-2" x="5" y="41.5">D</text>
 </svg>

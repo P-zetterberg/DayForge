@@ -1,5 +1,6 @@
 :root {
 --border-radius: 10px;
+--primary-color:#f7ca50;
 }
 
 body {
@@ -7,12 +8,15 @@ body {
     padding: 0;
     font-family: "Poppins", sans-serif;
     background: #f5f6f8;
+    background: #a738bd;
+    background: #38bdb1;
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 1em;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    position: relative;
   }
   * {
     box-sizing: border-box;
@@ -39,6 +43,6 @@ body {
   }
 main {
   flex: 1;
-  margin-bottom: 3em;
-  margin-top: 3em;
+  margin-bottom: 5em;
+  margin-top: 0em;
 }
