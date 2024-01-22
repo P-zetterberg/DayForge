@@ -35,7 +35,7 @@
 
       <a
         href="/how-to-use"
-        class:active={$page.url.pathname.includes("/how-to-use")}>How to use</a
+        class:active={$page.url.pathname.includes("/how-to-use")}>My days</a
       >
       <a
         href="/examples"

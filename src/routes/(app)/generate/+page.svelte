@@ -1,6 +1,7 @@
 <script>
   import { getCountryCode, getCountryDataList } from "countries-list";
   import { dayString } from "./teststring";
+  import { clickToCopy } from "$lib/clickToCopy.js";
 
   let selectedCountry;
   //console.log(countries[getCountryCode("Sweden")]);
@@ -83,7 +84,7 @@
     </form>
   </div>
   <div class="right-side">
-    <button>download</button>
+    <button use:clickToCopy={".generated__text"}>Copy</button>
     <div class="generated__text" id="certificate">
       {@html dayString}
     </div>
@@ -200,4 +201,7 @@
       transition-timing-function: ease-in-out;
     }
   }
+  /* .generated__text :global(h2) {
+   
+  } */
 </style>
