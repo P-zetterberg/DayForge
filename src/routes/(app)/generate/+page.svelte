@@ -2,9 +2,19 @@
   import { getCountryCode, getCountryDataList } from "countries-list";
   import { dayString } from "./teststring";
   import { clickToCopy } from "$lib/clickToCopy.js";
+  import { onMount } from "svelte";
 
   let selectedCountry;
   //console.log(countries[getCountryCode("Sweden")]);
+  let watcher;
+  let topMenu;
+  let sticking;
+  onMount(() => {
+    const observer = new IntersectionObserver((entries) => {
+      sticking = !entries[0].isIntersecting;
+    });
+    observer.observe(watcher);
+  });
 </script>
 
 <main>
@@ -84,7 +94,10 @@
     </form>
   </div>
   <div class="right-side">
-    <button use:clickToCopy={".generated__text"}>Copy</button>
+    <div bind:this={topMenu} class="top-menu" class:sticking>
+      <button class="copy" use:clickToCopy={".generated__text"}>Copy</button>
+    </div>
+    <div bind:this={watcher} data-scroll-watcher />
     <div class="generated__text" id="certificate">
       {@html dayString}
     </div>
@@ -103,7 +116,7 @@
     padding-right: 0em;
     display: grid;
     grid-template-columns: 400px 1fr;
-    gap: 1em;
+    /* gap: 1em; */
     margin-top: 2.5em;
     margin-bottom: 2.5em;
     box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 1);
@@ -118,6 +131,8 @@
     border-right: 1px solid lightgrey;
     padding-right: 1em;
     overflow-x: auto;
+    border-right: 2px solid black;
+    border-radius: 10px;
   }
   .right-side {
     overflow-x: auto;
@@ -128,7 +143,7 @@
     text-wrap: pretty;
     max-width: 50ch;
     margin-inline: auto;
-    padding-right: 1em;
+    padding-inline: 1em;
   }
   .input-container {
     display: flex;
@@ -204,4 +219,18 @@
   /* .generated__text :global(h2) {
    
   } */
+  .top-menu {
+    height: 50px;
+    background-color: #fcfcfc;
+    position: sticky;
+    top: 0;
+    transition: box-shadow 150ms ease-in;
+    &.sticking {
+      box-shadow: -1px 7px 5px -6px rgba(0, 0, 0, 0.24);
+      -webkit-box-shadow: -1px 7px 5px -6px rgba(0, 0, 0, 0.24);
+    }
+    .copy {
+      margin-left: 1em;
+    }
+  }
 </style>
