@@ -1,11 +1,14 @@
 <script>
+  import img from "../../assets/google2.png";
+  import imgApple from "../../assets/apple.png";
+
   let email = "pontus@zetterberg.io";
   let password = "qew123w2";
 </script>
 
 <main>
   <div class="form__container">
-    <form action="?/register" method="POST">
+    <form class="login-form" action="?/register" method="POST">
       <h1>Sign up</h1>
       <div class="form__item">
         <label for="email">Email</label>
@@ -33,6 +36,17 @@
 
       <button class="submit">Sign up</button>
     </form>
+
+    <form class="provider-form" method="POST">
+      <button class="provider-btn apple" formaction="?/login&provider=apple"
+        ><img src={imgApple} height="40" alt="apple icon" /><span
+          >Continue with Apple</span
+        ></button
+      >
+      <button class="provider-btn google" formaction="?/login&provider=google"
+        ><img src={img} alt="google icon" /></button
+      >
+    </form>
     <span class="login__redirect"
       >Already got an account? <a href="/login">Login here</a></span
     >
@@ -58,9 +72,11 @@
       justify-content: space-between;
       flex-direction: column;
       border-radius: var(--border-radius);
+      box-shadow: var(--primary-shadow);
+      border: var(--primary-border);
     }
 
-    form {
+    .login-form {
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -70,6 +86,7 @@
   }
 
   h1 {
+    margin-top: 0;
     margin-bottom: 0.5em;
   }
   .form__item {
@@ -87,6 +104,7 @@
     transition: border-color ease-in 150ms;
     border-radius: var(--border-radius);
     font-size: 14px;
+    border: var(--primary-border);
   }
   label {
     font-weight: 600;
@@ -104,19 +122,28 @@
     background-color: var(--primary-button, #f7ca50);
     height: 45px;
     border-radius: var(--border-radius);
+    border: var(--primary-border);
+    box-shadow: var(--primary-shadow);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-weight: 600;
     cursor: pointer;
-    transition:
-      background-color ease-in 150ms,
-      opacity ease-in 150ms;
     text-align: center;
     min-height: 45px;
-    transition: scale ease-in 150ms;
+    transition-property: box-shadow, top, left;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    position: relative;
+    top: 0;
+    left: 0;
+
     &:hover {
-      background-color: var(--primary-button, #f7ca50);
-      opacity: 0.85;
+      top: 4px;
+      left: 4px;
+      box-shadow: 1px 1px 0 #000;
+      transition-property: box-shadow, top, left;
+      transition-duration: 0.2s;
+      transition-timing-function: ease-in-out;
     }
     &:disabled {
       background-color: var(--primary-button, #f7ca50);
@@ -134,6 +161,29 @@
       opacity: 1;
       color: rgb(22, 22, 22);
       font-weight: 600;
+    }
+  }
+  .provider-form {
+    display: grid;
+    gap: 0.5em;
+    margin-top: 1em;
+    margin-inline: auto;
+  }
+  .provider-btn {
+    all: unset;
+    cursor: pointer;
+    &.apple {
+      display: flex;
+      border: 1px solid grey;
+      border-radius: 4px;
+      padding-right: 0.3em;
+
+      span {
+        align-self: center;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #1f1f1fe3;
+      }
     }
   }
 </style>

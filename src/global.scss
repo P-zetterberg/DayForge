@@ -1,6 +1,9 @@
 :root {
 --border-radius: 10px;
 --primary-color:#f7ca50;
+--primary-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 1);
+-webkit-box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 1);
+--primary-border: 2px solid black;
 }
 
 body {
@@ -10,6 +13,7 @@ body {
     background: #f5f6f8;
     background: #a738bd;
     background: #38bdb1;
+    background: #2d9d93;
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 1em;

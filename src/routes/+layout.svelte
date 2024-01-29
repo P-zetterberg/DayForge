@@ -1,6 +1,6 @@
 <script>
   import "../global.scss";
-  import brandLogo from "../assets/dayforge.svg";
+  import brandLogo from "../assets/dayforgeai-thicc.svg";
   import Waves from "../assets/waves2.svelte";
   import { page } from "$app/stores";
 
@@ -33,9 +33,8 @@
         class:active={$page.url.pathname.includes("/generate")}>Generate</a
       >
 
-      <a
-        href="/how-to-use"
-        class:active={$page.url.pathname.includes("/how-to-use")}>My days</a
+      <a href="/my-days" class:active={$page.url.pathname.includes("/my-days")}
+        >My days</a
       >
       <a
         href="/examples"
@@ -70,7 +69,7 @@
 <Waves />
 
 <style lang="scss">
-  div.profile {
+  /* div.profile {
     transition: color 0.2s ease-in-out;
     margin: 0;
     margin-left: 1em;
@@ -78,7 +77,7 @@
     &:hover {
       color: black;
     }
-  }
+  } */
   nav {
     display: flex;
     align-items: center;
@@ -153,8 +152,8 @@
       margin-left: 1em;
     }
   }
-  .profile {
+  /* .profile {
     display: flex;
     cursor: pointer;
-  }
+  } */
 </style>

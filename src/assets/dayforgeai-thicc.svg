@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="350" height="150" viewBox="0 0 350 150">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f7ca50;
+        stroke: #000;
+        stroke-linejoin: round;
+        stroke-width: 3px;
+      }
+
+      .cls-2 {
+        font-size: 75px;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #1e1e1f;
+        font-family: "Microsoft PhagsPa";
+        font-weight: 700;
+      }
+
+      .cls-3 {
+        font-size: 50px;
+      }
+    </style>
+  </defs>
+  <rect id="dayfroge" class="cls-1" x="4" y="36" width="83" height="83" rx="10" ry="10"/>
+  <text id="dayforge_D" data-name="dayforge D" class="cls-2" x="16" y="104">D</text>
+  <text id="dayfroge-2" data-name="dayfroge" class="cls-3" x="91.5" y="90.5">ayForge AI</text>
+</svg>
