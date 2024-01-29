@@ -1,6 +1,6 @@
 <script>
-  import LeftSide from "./leftSide.svelte";
-  import RightSide from "./rightSide.svelte";
+  import LeftSide from "./_components/leftSide.svelte";
+  import RightSide from "./_components/rightSide.svelte";
 </script>
 
 <main>

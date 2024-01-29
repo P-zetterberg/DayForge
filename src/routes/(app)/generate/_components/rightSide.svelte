@@ -1,7 +1,7 @@
 <script>
   import { clickToCopy } from "$lib/clickToCopy.js";
   import { onMount } from "svelte";
-  import { dayString } from "./teststring";
+  import { dayString } from "../teststring";
   import { generatedText } from "$lib/stores/generateStore.js";
 
   let sticking;
