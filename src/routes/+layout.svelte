@@ -58,7 +58,7 @@
     </div> -->
   {:else}
     <div class="nav__ctas">
-      <a href="/login">Sign in</a>
+      <a class="signin" href="/login">Sign in</a>
       <a class="signup" href="/register">Sign up</a>
     </div>
   {/if}
@@ -151,6 +151,9 @@
     &.buy__credits {
       margin-left: 1em;
     }
+  }
+  .signin {
+    color: black;
   }
   /* .profile {
     display: flex;

@@ -5,27 +5,31 @@ const openai = new OpenAI({
   organization: OPENAI_ORG_KEY,
   apiKey: OPENAI_API_KEY,
 });
-let systemPromt = { role: "system", content: "You are a helpful assistant." };
+let systemPrompt = { role: "system", content: "You are a helpful assistant." };
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {
   const requestData = await request.json();
-
   const completion = await openai.chat.completions.create({
     messages: [
-      systemPromt,
+      systemPrompt,
       {
         role: "user",
-        content: "Hello",
+        content: requestData.content,
       },
     ],
     model: "gpt-4",
-    stream: true,
+    stream: false,
   });
-  return new Response(completion.response.body, {
+
+  //completion.choices[0]
+  //completion.response.body
+
+  const res = new Response(JSON.stringify(completion.choices[0]), {
     headers: {
-      "cache-control": "no-cache",
-      "content-type": "text/event-stream",
+      "Content-Type": "application/json",
     },
   });
+
+  return res;
 }

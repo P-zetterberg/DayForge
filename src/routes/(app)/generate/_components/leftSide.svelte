@@ -1,31 +1,36 @@
 <script>
-  import { getCountryCode, getCountryDataList } from "countries-list";
-  import { generatedText } from "$lib/stores/generateStore.js";
+  import { getCountryDataList } from "countries-list";
+  import { generatedText, isLoading } from "$lib/stores/generateStore.js";
+  import { times24Hour, times12Hour } from "$lib/clockFormats.js";
   import { SSE } from "sse.js";
 
-  let selectedCountry;
+  const formData = {
+    groupSize: 1,
+    includeFood: "yes",
+    dayStart: timeFormat === "24" ? "08:00" : "08:00 AM",
+    dayEnd: timeFormat === "24" ? "20:00" : "08:00 PM",
+    budget: 0,
+  };
+  const timeFormat = "24";
+  const selectedTime = timeFormat === "24" ? times24Hour : times12Hour;
 
   const handleSubmit = async () => {
-    const eventSource = new SSE("/api", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      payload: JSON.stringify({
-        role: "user",
-        content: "Hello",
-      }),
-    });
-    eventSource.addEventListener("message", (e) => {
-      if (e.data === "[DONE]") return;
-      const completionResponse = JSON.parse(e.data);
-      const [{ delta }] = completionResponse.choices;
-
-      //console.log($generatedText);
-      if (delta.content) {
-        $generatedText = [...$generatedText, delta?.content];
-      }
-    });
-    eventSource.stream();
+    $isLoading = true;
+    try {
+      const res = await fetch("/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          role: "user",
+          content: "Hello, what is 1+1",
+        }),
+      });
+      let parsed = await res.json();
+      $generatedText = parsed.message.content;
+      $isLoading = false;
+    } catch (error) {}
   };
 </script>
 
@@ -38,11 +43,11 @@
   >
     <div class="input-container">
       <label for="date">Date</label>
-      <input type="date" name="date" class="input" />
+      <input type="date" name="date" class="input" bind:value={formData.date} />
     </div>
     <div class="input-container">
       <label for="country">Country</label>
-      <select bind:value={selectedCountry} name="country" id="" class="input">
+      <select bind:value={formData.country} name="country" id="" class="input">
         {#each getCountryDataList() as country, i}
           {#if i === 0}
             <option selected value={country}>{country.name}</option>
@@ -54,28 +59,54 @@
 
     <div class="input-container left">
       <label for="city">City</label>
-      <input type="text" name="city" class="input" />
+      <input type="text" name="city" class="input" bind:value={formData.city} />
     </div>
     <div class="input-container right">
       <label for="area">Area</label>
-      <input type="text" name="area" class="input" />
+      <input type="text" name="area" class="input" bind:value={formData.area} />
     </div>
     <div class="input-container left">
       <label for="start">Day start</label>
-      <select name="start" id="" class="input"></select>
+      <select
+        name="start"
+        class="input"
+        on:change={(e) => (formData.dayStart = e.target.value)}
+      >
+        {#each selectedTime as time}
+          <option selected={time === formData?.dayStart} value={time}
+            >{time}</option
+          >
+        {/each}
+      </select>
     </div>
     <div class="input-container right">
       <label for="end">Day end</label>
-      <select name="end" id="" class="input"></select>
+      <select
+        name="end"
+        class="input"
+        on:change={(e) => (formData.dayEnd = e.target.value)}
+      >
+        {#each selectedTime as time}
+          <option selected={time === formData?.dayEnd} value={time}
+            >{time}</option
+          >
+        {/each}
+      </select>
     </div>
     <div class="input-container left">
-      <label for="budget">Budget ({selectedCountry?.currency})</label>
-      <input value="0" min="0" type="number" name="budget" class="input" />
+      <label for="budget">Budget ({formData?.country?.currency})</label>
+      <input
+        min="0"
+        type="number"
+        name="budget"
+        class="input"
+        bind:value={formData.budget}
+      />
     </div>
     <div class="input-container right">
       <label for="group">Group size</label>
       <input
-        value="1"
+        bind:value={formData.groupSize}
         min="1"
         max="5"
         type="number"
@@ -88,21 +119,47 @@
       <div>
         <div>
           <label for="yes">Yes</label>
-          <input type="radio" checked id="yes" name="dayType" class="input" />
+          <input
+            type="radio"
+            checked={formData.includeFood === "yes"}
+            id="yes"
+            name="dayType"
+            class="input"
+            on:change={(e) => (formData.includeFood = e.target.value)}
+          />
 
           <label for="no">No</label>
-          <input type="radio" id="no" name="dayType" class="input" />
+          <input
+            type="radio"
+            checked={formData.includeFood === "no"}
+            id="no"
+            name="dayType"
+            class="input"
+            on:change={(e) => (formData.includeFood = e.target.value)}
+          />
         </div>
       </div>
     </div>
     <div class="input-container">
       <label for="include">Include</label>
-      <textarea spellcheck="false" name="include" id="" class="input"
+      <textarea
+        spellcheck="false"
+        name="include"
+        id=""
+        class="input"
+        maxlength="300"
+        bind:value={formData.includes}
       ></textarea>
     </div>
     <div class="input-container">
       <label for="exclude">Exclude</label>
-      <textarea spellcheck="false" name="exclude" id="" class="input"
+      <textarea
+        spellcheck="false"
+        name="exclude"
+        id=""
+        class="input"
+        maxlength="300"
+        bind:value={formData.excludes}
       ></textarea>
     </div>
     <input type="submit" value="Generate" class="submit-btn" />
@@ -152,6 +209,7 @@
     display: grid;
     gap: 0.75em;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    padding-bottom: 0.5em;
   }
   textarea {
     resize: vertical;

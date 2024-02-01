@@ -1,8 +1,9 @@
 <script>
   import { clickToCopy } from "$lib/clickToCopy.js";
   import { onMount } from "svelte";
-  import { dayString } from "../teststring";
-  import { generatedText } from "$lib/stores/generateStore.js";
+  import { dayString, safeStringGenerator } from "./../teststring.js";
+  import { generatedText, isLoading } from "$lib/stores/generateStore.js";
+  import Loading from "$lib/loading.svelte";
 
   let sticking;
   let watcher;
@@ -22,11 +23,18 @@
   </div>
   <div bind:this={watcher} data-scroll-watcher />
   <div class="generated__text" id="certificate">
-    <!-- {@html dayString} -->
+    <!-- {@html safeStringGenerator(dayString)} -->
     {#each $generatedText as text}
       {text}
     {/each}
+    {#if $isLoading}
+      <div class="loader-wrapper">
+        <Loading />
+        <h4>Generating, please wait</h4>
+      </div>
+    {/if}
   </div>
+  {$isLoading}
 </div>
 
 <style lang="scss">
@@ -54,5 +62,9 @@
     .copy {
       margin-left: 1em;
     }
+  }
+  .loader-wrapper {
+    display: grid;
+    justify-items: center;
   }
 </style>

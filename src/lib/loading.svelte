@@ -1,75 +1,60 @@
-<div class="dot-pulse"></div>
+<div class="loader"></div>
 
 <style>
-  .dot-pulse {
-    position: relative;
-    left: -9999px;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: black;
-    color: black;
-    box-shadow: 9999px 0 0 -5px;
-    animation: dot-pulse 1.5s infinite linear;
-    animation-delay: 0.25s;
-  }
-  .dot-pulse::before,
-  .dot-pulse::after {
-    content: "";
+  .loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     display: inline-block;
+    position: relative;
+    border: 3px solid;
+    border-color: var(--primary-color) var(--primary-color) transparent
+      transparent;
+    box-sizing: border-box;
+    animation: rotation 2s linear infinite;
+  }
+  .loader::after,
+  .loader::before {
+    content: "";
+    box-sizing: border-box;
     position: absolute;
+    left: 0;
+    right: 0;
     top: 0;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: black;
-    color: black;
+    bottom: 0;
+    margin: auto;
+    border: 3px solid;
+    border-color: transparent transparent var(--primary-color)
+      var(--primary-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: rotationBack 1s linear infinite;
+    transform-origin: center center;
   }
-  .dot-pulse::before {
-    box-shadow: 9984px 0 0 -5px;
-    animation: dot-pulse-before 1.5s infinite linear;
-    animation-delay: 0s;
-  }
-  .dot-pulse::after {
-    box-shadow: 10014px 0 0 -5px;
-    animation: dot-pulse-after 1.5s infinite linear;
-    animation-delay: 0.5s;
+  .loader::before {
+    width: 32px;
+    height: 32px;
+    border-color: var(--primary-color) var(--primary-color) transparent
+      transparent;
+    animation: rotation 3s linear infinite;
   }
 
-  @keyframes dot-pulse-before {
+  @keyframes rotation {
     0% {
-      box-shadow: 9984px 0 0 -5px;
+      transform: rotate(0deg);
     }
-    30% {
-      box-shadow: 9984px 0 0 2px;
-    }
-    60%,
     100% {
-      box-shadow: 9984px 0 0 -5px;
+      transform: rotate(360deg);
     }
   }
-  @keyframes dot-pulse {
+  @keyframes rotationBack {
     0% {
-      box-shadow: 9999px 0 0 -5px;
+      transform: rotate(0deg);
     }
-    30% {
-      box-shadow: 9999px 0 0 2px;
-    }
-    60%,
     100% {
-      box-shadow: 9999px 0 0 -5px;
-    }
-  }
-  @keyframes dot-pulse-after {
-    0% {
-      box-shadow: 10014px 0 0 -5px;
-    }
-    30% {
-      box-shadow: 10014px 0 0 2px;
-    }
-    60%,
-    100% {
-      box-shadow: 10014px 0 0 -5px;
+      transform: rotate(-360deg);
     }
   }
 </style>

@@ -1,7 +1,6 @@
 import { marked } from "marked";
 import DOMPurify from "isomorphic-dompurify";
-export const dayString = DOMPurify.sanitize(
-  marked.parse(`
+export const dayString = `
 # Tokyo Day Trip Plan for 2024-02-21
 Here's a schedule of suggested activities for your day in Tokyo, along with some recommended places to eat. 
 
@@ -60,5 +59,9 @@ End your day with a magnificent view of Tokyo at night from the top of Tokyo Sky
 - **Total: 20,260JPY**
 
 Note that the total is a little bit over the budget due to the cab fare to Skytree. If you need to fit the budget exactly, consider taking public transportation for some parts of your trip. Enjoy your day in Tokyo!
-`)
-);
+`;
+
+export function promptFromFormData(formObject) {}
+export function safeStringGenerator(string) {
+  return DOMPurify.sanitize(marked.parse(string));
+}
