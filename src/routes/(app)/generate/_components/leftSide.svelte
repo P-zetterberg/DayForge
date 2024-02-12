@@ -3,6 +3,8 @@
   import { generatedText, isLoading } from "$lib/stores/generateStore.js";
   import { times24Hour, times12Hour } from "$lib/clockFormats.js";
   import { SSE } from "sse.js";
+  import { DateInput } from "date-picker-svelte";
+  import { tooltip } from "$lib/useTooltip.js";
 
   const formData = {
     groupSize: 1,
@@ -10,6 +12,7 @@
     dayStart: timeFormat === "24" ? "08:00" : "08:00 AM",
     dayEnd: timeFormat === "24" ? "20:00" : "08:00 PM",
     budget: 0,
+    date: new Date(),
   };
   const timeFormat = "24";
   const selectedTime = timeFormat === "24" ? times24Hour : times12Hour;
@@ -43,7 +46,13 @@
   >
     <div class="input-container">
       <label for="date">Date</label>
-      <input type="date" name="date" class="input" bind:value={formData.date} />
+      <DateInput
+        format="yyyy-MM-dd"
+        class="input"
+        min={new Date()}
+        bind:value={formData.date}
+      />
+      <!-- <input type="date" name="date" class="input" bind:value={formData.date} /> -->
     </div>
     <div class="input-container">
       <label for="country">Country</label>
@@ -104,7 +113,11 @@
       />
     </div>
     <div class="input-container right">
-      <label for="group">Group size</label>
+      <label
+        for="group"
+        title="Amount of people to try and generate activities for."
+        use:tooltip>Group size</label
+      >
       <input
         bind:value={formData.groupSize}
         min="1"
@@ -115,7 +128,12 @@
       />
     </div>
     <div class="input-container">
-      <label for="dayType">Include places to eat?</label>
+      <label
+        for="dayType"
+        title="The AI will recommend place to eat or just plan breaks and you can decide where for yourselves."
+        use:tooltip
+        >Include places to eat?
+      </label>
       <div>
         <div>
           <label for="yes">Yes</label>
@@ -141,7 +159,12 @@
       </div>
     </div>
     <div class="input-container">
-      <label for="include">Include</label>
+      <label
+        for="include"
+        use:tooltip
+        title="Add places, restaurants etc that you want the AI to try and include."
+        >Include</label
+      >
       <textarea
         spellcheck="false"
         name="include"
@@ -152,7 +175,12 @@
       ></textarea>
     </div>
     <div class="input-container">
-      <label for="exclude">Exclude</label>
+      <label
+        for="exclude"
+        use:tooltip
+        title="Add places, restaurants etc that you want the AI to try and exclude."
+        >Exclude</label
+      >
       <textarea
         spellcheck="false"
         name="exclude"
@@ -167,12 +195,25 @@
 </div>
 
 <style lang="scss">
+  :root {
+    --date-input-width: 100%;
+  }
+  .date-time-field {
+    border-radius: calc(var(--border-radius) / 2);
+    border: 2px solid #000;
+    background-color: #ffffff;
+    padding-left: 0.3em;
+    transition: border 200ms ease-in-out;
+  }
   .left-side {
     border-right: 1px solid lightgrey;
-    padding-right: 1em;
+    padding-inline: 1em;
     overflow-x: auto;
     border-right: 2px solid black;
     border-radius: 10px;
+  }
+  label {
+    width: fit-content;
   }
   .input-container {
     display: flex;

@@ -16,8 +16,7 @@
     background-color: #fcfcfc;
     z-index: 900;
     border-radius: var(--border-radius);
-    padding: 1em;
-    padding-right: 0em;
+    padding-block: 1em;
     display: grid;
     grid-template-columns: 400px 1fr;
     /* gap: 1em; */

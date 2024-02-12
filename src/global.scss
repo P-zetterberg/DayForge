@@ -50,3 +50,17 @@ main {
   margin-bottom: 5em;
   margin-top: 0em;
 }
+@media print {
+  nav,footer,svg {
+    display: none !important;
+  }
+}
+.date-time-field input {
+  border-radius: calc(var(--border-radius) / 2) !important;
+  border: 2px solid #000 !important;
+  background-color: #ffffff !important;
+  padding-left: 0.3em !important;
+  transition: border 200ms ease-in-out !important;
+  padding-top: 0.25em !important;
+  padding-bottom: 0.25em !important;
+}

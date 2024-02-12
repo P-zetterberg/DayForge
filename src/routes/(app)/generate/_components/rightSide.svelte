@@ -24,9 +24,11 @@
   <div bind:this={watcher} data-scroll-watcher />
   <div class="generated__text" id="certificate">
     <!-- {@html safeStringGenerator(dayString)} -->
+
     {#each $generatedText as text}
       {text}
     {/each}
+
     {#if $isLoading}
       <div class="loader-wrapper">
         <Loading />
@@ -34,7 +36,6 @@
       </div>
     {/if}
   </div>
-  {$isLoading}
 </div>
 
 <style lang="scss">

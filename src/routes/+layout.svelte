@@ -23,8 +23,8 @@
   />
 </svelte:head>
 <nav>
-  <a href={!data?.session ? "/" : "/"}>
-    <img src={brandLogo} width="150" alt="brand logo" class="logo" />
+  <a style="line-height: 0;" href={!data?.session ? "/" : "/"}>
+    <img src={brandLogo} width="175" alt="brand logo" class="logo" />
   </a>
   <div class="nav__items">
     {#if data?.session}
@@ -33,8 +33,8 @@
         class:active={$page.url.pathname.includes("/generate")}>Generate</a
       >
 
-      <a href="/my-days" class:active={$page.url.pathname.includes("/my-days")}
-        >My days</a
+      <a href="/history" class:active={$page.url.pathname.includes("/history")}
+        >History</a
       >
       <a
         href="/examples"
