@@ -21,18 +21,19 @@ export function tooltip(element) {
 			top: ${event.pageX + 20}px;
 			left: ${event.pageY + 12}px;
             font-size:0.8750em;
-            max-width:200px;
+            max-width:250px;
             text-wrap:pretty;
+            z-index:50;
 		`;
 
-    document.querySelector("main").appendChild(div);
+    document.querySelector("label").appendChild(div);
   }
   function mouseMove(event) {
     div.style.left = `${event.pageX + 12}px`;
     div.style.top = `${event.pageY + -20}px`;
   }
   function mouseLeave() {
-    document.querySelector("main").removeChild(div);
+    document.querySelector("label").removeChild(div);
     // NOTE: restore the `title` attribute
     element.setAttribute("title", title);
   }

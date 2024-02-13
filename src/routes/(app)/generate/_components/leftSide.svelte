@@ -45,18 +45,34 @@
     on:submit|preventDefault={() => handleSubmit()}
   >
     <div class="input-container">
-      <label for="date">Date</label>
+      <label
+        for="date"
+        id="date"
+        use:tooltip
+        title="The date you want the day to be generated for.">Date</label
+      >
       <DateInput
         format="yyyy-MM-dd"
         class="input"
         min={new Date()}
+        required
         bind:value={formData.date}
       />
-      <!-- <input type="date" name="date" class="input" bind:value={formData.date} /> -->
     </div>
     <div class="input-container">
-      <label for="country">Country</label>
-      <select bind:value={formData.country} name="country" id="" class="input">
+      <label
+        for="country"
+        id="country"
+        use:tooltip
+        title="The country you are visiting.">Country</label
+      >
+      <select
+        bind:value={formData.country}
+        required
+        name="country"
+        id=""
+        class="input"
+      >
         {#each getCountryDataList() as country, i}
           {#if i === 0}
             <option selected value={country}>{country.name}</option>
@@ -67,15 +83,42 @@
     </div>
 
     <div class="input-container left">
-      <label for="city">City</label>
-      <input type="text" name="city" class="input" bind:value={formData.city} />
+      <label
+        for="city"
+        use:tooltip
+        title="The city you want the generated day to take place in"
+        >City*</label
+      >
+      <input
+        required
+        type="text"
+        name="city"
+        class="input"
+        bind:value={formData.city}
+      />
     </div>
     <div class="input-container right">
-      <label for="area">Area</label>
-      <input type="text" name="area" class="input" bind:value={formData.area} />
+      <label
+        for="area"
+        use:tooltip
+        title="The area you want the generated day to roughly be based around."
+        >Area*</label
+      >
+      <input
+        required
+        type="text"
+        name="area"
+        class="input"
+        bind:value={formData.area}
+      />
     </div>
     <div class="input-container left">
-      <label for="start">Day start</label>
+      <label
+        for="start"
+        use:tooltip
+        title="The time you want the generated day to roughly start."
+        >Day start</label
+      >
       <select
         name="start"
         class="input"
@@ -89,7 +132,12 @@
       </select>
     </div>
     <div class="input-container right">
-      <label for="end">Day end</label>
+      <label
+        for="end"
+        use:tooltip
+        title="The time you want the generated day to roughly end."
+        >Day end</label
+      >
       <select
         name="end"
         class="input"
@@ -103,7 +151,12 @@
       </select>
     </div>
     <div class="input-container left">
-      <label for="budget">Budget ({formData?.country?.currency})</label>
+      <label
+        for="budget"
+        use:tooltip
+        title="The estimated amount each person in the party can spend for the day."
+        >Budget ({formData?.country?.currency})</label
+      >
       <input
         min="0"
         type="number"
@@ -162,7 +215,7 @@
       <label
         for="include"
         use:tooltip
-        title="Add places, restaurants etc that you want the AI to try and include."
+        title="Add places, restaurants etc that you want the AI to try and include. Seperate with a comma for best effect."
         >Include</label
       >
       <textarea
@@ -178,7 +231,7 @@
       <label
         for="exclude"
         use:tooltip
-        title="Add places, restaurants etc that you want the AI to try and exclude."
+        title="Add places, restaurants etc that you want the AI to try and exclude. Seperate with a comma for best effect."
         >Exclude</label
       >
       <textarea
@@ -197,13 +250,6 @@
 <style lang="scss">
   :root {
     --date-input-width: 100%;
-  }
-  .date-time-field {
-    border-radius: calc(var(--border-radius) / 2);
-    border: 2px solid #000;
-    background-color: #ffffff;
-    padding-left: 0.3em;
-    transition: border 200ms ease-in-out;
   }
   .left-side {
     border-right: 1px solid lightgrey;
