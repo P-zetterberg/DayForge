@@ -6,6 +6,7 @@
   import { DateInput } from "date-picker-svelte";
   import { tooltip } from "$lib/useTooltip.js";
 
+  let timeFormat = "24";
   const formData = {
     groupSize: 1,
     includeFood: "yes",
@@ -13,9 +14,9 @@
     dayEnd: timeFormat === "24" ? "20:00" : "08:00 PM",
     budget: 0,
     date: new Date(),
+    terms: false,
   };
-  const timeFormat = "24";
-  const selectedTime = timeFormat === "24" ? times24Hour : times12Hour;
+  $: selectedTime = timeFormat === "24" ? times24Hour : times12Hour;
 
   const handleSubmit = async () => {
     $isLoading = true;
@@ -26,19 +27,40 @@
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          role: "user",
-          content: "Hello, what is 1+1",
+          content: formData,
         }),
       });
       let parsed = await res.json();
       $generatedText = parsed.message.content;
       $isLoading = false;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error); // kolla vid throw & flytta detta till +page.server.js
+    }
   };
+  function handleTimeFormat(format) {
+    timeFormat = format;
+  }
 </script>
 
 <div class="left-side">
   <h2>Settings</h2>
+  <label for="rad-container">Clock format</label>
+  <div class="rad-container">
+    <button
+      class="rad-button"
+      class:active={timeFormat === "12"}
+      on:click={() => handleTimeFormat("12")}
+    >
+      12H
+    </button>
+    <button
+      class="rad-button"
+      class:active={timeFormat === "24"}
+      on:click={() => handleTimeFormat("24")}
+    >
+      24H
+    </button>
+  </div>
   <form
     class="form-container"
     method="POST"
@@ -150,11 +172,11 @@
         {/each}
       </select>
     </div>
-    <div class="input-container left">
+    <!-- <div class="input-container left">
       <label
         for="budget"
         use:tooltip
-        title="The estimated amount each person in the party can spend for the day."
+        title="The estimated amount each person in the group can spend for the day."
         >Budget ({formData?.country?.currency})</label
       >
       <input
@@ -164,8 +186,8 @@
         class="input"
         bind:value={formData.budget}
       />
-    </div>
-    <div class="input-container right">
+    </div> -->
+    <div class="input-container">
       <label
         for="group"
         title="Amount of people to try and generate activities for."
@@ -180,7 +202,7 @@
         class="input"
       />
     </div>
-    <div class="input-container">
+    <!-- <div class="input-container">
       <label
         for="dayType"
         title="The AI will recommend place to eat or just plan breaks and you can decide where for yourselves."
@@ -210,7 +232,7 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="input-container">
       <label
         for="include"
@@ -243,6 +265,16 @@
         bind:value={formData.excludes}
       ></textarea>
     </div>
+    <div style="grid-column: 1/3">
+      <input
+        required
+        class="checkbox"
+        type="checkbox"
+        bind:checked={formData.terms}
+        id="terms"
+      />
+      <label for="terms">I agree to the terms of service.</label>
+    </div>
     <input type="submit" value="Generate" class="submit-btn" />
   </form>
 </div>
@@ -250,6 +282,24 @@
 <style lang="scss">
   :root {
     --date-input-width: 100%;
+  }
+  h2 {
+    margin-bottom: 0.5em;
+  }
+  .rad-container {
+    display: flex;
+    gap: 0.25em;
+    margin-bottom: 0.5em;
+    .rad-button {
+      padding: 0.25em 0.5em;
+      border: 2px solid lightgrey;
+      border-radius: calc(var(--border-radius) / 2);
+      background-color: #ffffff;
+      cursor: pointer;
+      &.active {
+        border: 2px solid black;
+      }
+    }
   }
   .left-side {
     border-right: 1px solid lightgrey;
@@ -305,6 +355,7 @@
   input[type="radio"] {
     accent-color: #232323;
   }
+
   .submit-btn {
     background-color: var(--primary-color);
     grid-column: 1/3;
@@ -335,5 +386,8 @@
   }
   h2 {
     margin-top: 0;
+  }
+  input[type="checkbox"] {
+    accent-color: var(--primary-color);
   }
 </style>

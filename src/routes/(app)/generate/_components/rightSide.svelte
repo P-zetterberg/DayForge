@@ -18,32 +18,13 @@
 </script>
 
 <div class="right-side">
-  <div class="generated__text" id="certificate">
-    <div class="help-text-container">
-      <div class="disclaimer">
-        The generated day should be used as a baseline and important information
-        should always be double checked!
-      </div>
-      <h3 class="">How to use</h3>
-      <ol>
-        <li>
-          Fill out the form to the left. The more information the better the
-          results will be.
-        </li>
-
-        <li>
-          Accept our terms and press generate. Wait for the generation to
-          complete & enjoy your generated day!
-        </li>
-      </ol>
-      <span><b>Tip: </b>Hover over any label to get a helpful tooltip.</span>
+  <div bind:this={watcher} data-scroll-watcher />
+  {#if $generatedText.length && !$isLoading}
+    <div bind:this={topMenu} class="top-menu" class:sticking>
+      <button class="copy" use:clickToCopy={".generated__text"}>Copy</button>
     </div>
-    {#if $generatedText.length && !$isLoading}
-      <div bind:this={topMenu} class="top-menu" class:sticking>
-        <button class="copy" use:clickToCopy={".generated__text"}>Copy</button>
-      </div>
-      <div bind:this={watcher} data-scroll-watcher />
-    {/if}
+  {/if}
+  <div class="generated__text" id="certificate">
     <!-- {@html safeStringGenerator(dayString)} -->
     {#each $generatedText as text}
       {text}
@@ -53,6 +34,26 @@
       <div class="loader-wrapper">
         <Loading />
         <h4>Generating, please wait</h4>
+      </div>
+    {:else}
+      <div class="help-text-container">
+        <div class="disclaimer">
+          The generated day should be used as a baseline and the information
+          should always be double checked!
+        </div>
+        <h3 class="">How to use</h3>
+        <ol>
+          <li>
+            Fill out the form to the left. The more information the better the
+            results will be.
+          </li>
+
+          <li>
+            Accept our terms and press generate. Wait for the generation to
+            complete & enjoy your generated day!
+          </li>
+        </ol>
+        <span><b>Tip: </b>Hover over any label to get a helpful tooltip.</span>
       </div>
     {/if}
   </div>
@@ -90,23 +91,19 @@
     justify-items: center;
   }
   .disclaimer {
-    background-color: rgba(255, 153, 35, 0.486);
-    border: 2px solid orange;
+    background-color: rgba(255, 152, 35, 0.301);
+    border: 2px solid rgb(255, 172, 18);
     border-radius: calc(var(--border-radius) / 2);
-    padding-inline: 0.2em;
+    padding: 0.2em;
     font-weight: 400;
-    opacity: 0.8;
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 3em;
   }
   .help-text-container {
     display: grid;
     justify-content: center;
-
     span {
       text-decoration: underline;
     }
-  }
-  .help__text {
-    font-weight: 500;
-    color: rgb(68, 67, 67);
   }
 </style>
