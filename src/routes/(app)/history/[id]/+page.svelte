@@ -7,7 +7,7 @@
 <main>
   <div class="content">
     <!-- {data.day.id} -->
-    {@html safeStringGenerator(dayString)}
+    {@html safeStringGenerator(data.day.generated_text.message.content)}
   </div>
 </main>
 

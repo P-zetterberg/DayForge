@@ -1,7 +1,11 @@
 <script>
   import { clickToCopy } from "$lib/clickToCopy.js";
   import { onMount } from "svelte";
-  import { dayString, safeStringGenerator } from "./../teststring.js";
+  import {
+    dayString,
+    safeStringGenerator,
+    otherString,
+  } from "./../teststring.js";
   import { generatedText, isLoading } from "$lib/stores/generateStore.js";
   import Loading from "$lib/loading.svelte";
 
@@ -22,20 +26,20 @@
   {#if $generatedText.length && !$isLoading}
     <div bind:this={topMenu} class="top-menu" class:sticking>
       <button class="copy" use:clickToCopy={".generated__text"}>Copy</button>
+      <button class="print">Print</button>
     </div>
   {/if}
   <div class="generated__text" id="certificate">
-    <!-- {@html safeStringGenerator(dayString)} -->
-    {#each $generatedText as text}
-      {text}
-    {/each}
+    {#if $generatedText.length > 0}
+      {@html safeStringGenerator($generatedText)}
+    {/if}
 
-    {#if $isLoading}
+    {#if $isLoading && !$generatedText.length}
       <div class="loader-wrapper">
         <Loading />
         <h4>Generating, please wait</h4>
       </div>
-    {:else}
+    {:else if !$generatedText.length}
       <div class="help-text-container">
         <div class="disclaimer">
           The generated day should be used as a baseline and the information
@@ -104,6 +108,11 @@
     justify-content: center;
     span {
       text-decoration: underline;
+    }
+  }
+  @media print {
+    .top-menu {
+      display: none;
     }
   }
 </style>

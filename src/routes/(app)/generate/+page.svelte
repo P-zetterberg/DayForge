@@ -27,4 +27,14 @@
     border: 2px solid black;
     max-height: 800px;
   }
+  @media print {
+    main {
+      box-shadow: none;
+      border: none;
+      overflow: visible;
+      margin: 0;
+      padding: 0;
+      display: block;
+    }
+  }
 </style>

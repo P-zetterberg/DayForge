@@ -35,6 +35,8 @@
       $isLoading = false;
     } catch (error) {
       console.log(error); // kolla vid throw & flytta detta till +page.server.js
+      //TODO error alert toast
+      console.log("HEJ");
     }
   };
   function handleTimeFormat(format) {
@@ -389,5 +391,10 @@
   }
   input[type="checkbox"] {
     accent-color: var(--primary-color);
+  }
+  @media print {
+    .left-side {
+      display: none;
+    }
   }
 </style>

@@ -71,6 +71,7 @@
     margin-top: 2.5em;
     margin-bottom: 2.5em;
     padding: 1em;
+    padding-inline: 5em;
     z-index: 999;
     overflow: auto;
   }

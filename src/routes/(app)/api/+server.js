@@ -1,4 +1,5 @@
 import { OPENAI_API_KEY, OPENAI_ORG_KEY } from "$env/static/private";
+import { promptCreator } from "./_prompt/mainPrompt";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -14,32 +15,38 @@ let systemPrompt = {
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, locals }) {
   try {
-    // await subtractCredit(locals);
+    await subtractCredit(locals);
     const requestData = await request.json();
-    // const completion = await openai.chat.completions.create({
-    //   messages: [
-    //     systemPrompt,
-    //     {
-    //       role: "user",
-    //       content: requestData.content, //Görs om till separat function som är prompt + form values.
-    //     },
-    //   ],
-    //   model: "gpt-4",
-    //   stream: false,
-    // });
-    requestData.completion = {
-      message: {
-        content: "123",
-      },
+    const completion = await openai.chat.completions.create({
+      messages: [
+        systemPrompt,
+        {
+          role: "user",
+          content: promptCreator(requestData.content), //Görs om till separat function som är prompt + form values.
+        },
+      ],
+      model: "gpt-4",
+      stream: false,
+    });
+    //TODO error från GPT koll igen fake key för ez error
+
+    // requestData.completion = {
+    //   message: {
+    //     content: "123",
+    //   },
+    // };
+    const completedObj = {
+      completion: completion.choices[0],
+      metadata: requestData.content,
     };
-    //completion.choices[0];
-    let savedData = await saveGeneratedText(requestData, locals);
+
+    let savedData = await saveGeneratedText(completedObj, locals);
     if (!savedData) {
       addCredit(locals);
-      throw Error({ message: "Could not save data!", status: 404 });
+      throw Error("Could not save data!");
     }
 
-    const res = new Response(JSON.stringify(requestData.completion), {
+    const res = new Response(JSON.stringify(completion.choices[0]), {
       headers: {
         "Content-Type": "application/json",
       },
@@ -57,14 +64,11 @@ async function saveGeneratedText(objData, locals) {
   } = await locals.supabase.auth.getUser();
   const { error, data } = await locals.supabase
     .from("generations")
-    .insert([
-      {
-        //spara land mm här för bättree history vy
-        generated_text: objData.completion,
-        user_id: user.id,
-        metadata: objData.content,
-      },
-    ])
+    .insert({
+      generated_text: objData.completion,
+      user_id: user.id,
+      metadata: objData.metadata,
+    })
     .select();
 
   if (error) return false; //Kasta error fånfa typeof error return error response iställer för ingen new Res
