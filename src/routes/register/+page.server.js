@@ -14,9 +14,9 @@ export const actions = {
 
     if (err) {
       if (err instanceof AuthApiError && err.status == 400) {
-        throw redirect(303, "/login");
+        redirect(303, "/login");
       }
     }
-    throw redirect(303, "/dashboard");
+    redirect(303, "/dashboard");
   },
 };

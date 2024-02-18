@@ -25,7 +25,7 @@ export const actions = {
           message: "Something went wrong.",
         });
       }
-      throw redirect(303, data.url);
+      redirect(303, data.url);
     }
 
     const body = Object.fromEntries(await request.formData());
@@ -45,6 +45,6 @@ export const actions = {
       });
     }
 
-    throw redirect(303, "/dashboard");
+    redirect(303, "/dashboard");
   },
 };
