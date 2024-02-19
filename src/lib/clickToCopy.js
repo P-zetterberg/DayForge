@@ -3,9 +3,13 @@ export function clickToCopy(node, target) {
     let text = target
       ? document.querySelector(target).innerText
       : node.innerText;
-
+    const trueTarget = document.querySelector(target);
     try {
-      await navigator.clipboard.writeText(text);
+      const clipboardItem = new ClipboardItem({
+        "text/plain": new Blob([trueTarget.innerText], { type: "text/plain" }),
+        "text/html": new Blob([trueTarget.outerHTML], { type: "text/html" }),
+      });
+      await navigator.clipboard.write([clipboardItem]);
 
       node.dispatchEvent(
         new CustomEvent("copysuccess", {

@@ -23,12 +23,12 @@
 
 <div class="right-side">
   <div bind:this={watcher} data-scroll-watcher />
-  {#if $generatedText.length && !$isLoading}
-    <div bind:this={topMenu} class="top-menu" class:sticking>
-      <button class="copy" use:clickToCopy={".generated__text"}>Copy</button>
-      <button class="print">Print</button>
-    </div>
-  {/if}
+  <!-- {#if $generatedText.length > 0 && !$isLoading} -->
+  <div bind:this={topMenu} class="top-menu" class:sticking>
+    <button class="copy" use:clickToCopy={".generated__text"}>Copy</button>
+    <button class="save" on:click={() => window.print()}>Save</button>
+  </div>
+  <!-- {/if} -->
   <div class="generated__text" id="certificate">
     {#if $generatedText.length > 0}
       {@html safeStringGenerator($generatedText)}
@@ -80,14 +80,31 @@
     height: 50px;
     background-color: #fcfcfc;
     position: sticky;
+    display: flex;
+    gap: 0.5em;
+    justify-content: flex-end;
     top: 0;
     transition: box-shadow 150ms ease-in;
     &.sticking {
       box-shadow: -1px 7px 5px -6px rgba(0, 0, 0, 0.24);
       -webkit-box-shadow: -1px 7px 5px -6px rgba(0, 0, 0, 0.24);
     }
-    .copy {
-      margin-left: 1em;
+    .copy,
+    .save {
+      all: unset;
+      padding-inline: 0.5em;
+      padding-block: 0.25em;
+      border: 2px solid lightgrey;
+      border-radius: calc(var(--border-radius) / 2);
+      height: 25px;
+      cursor: pointer;
+      transition: border-color 200ms ease-in-out;
+      &:hover {
+        border-color: black;
+      }
+    }
+    .save {
+      margin-right: 1em;
     }
   }
   .loader-wrapper {
