@@ -25,7 +25,6 @@
     box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 1);
     -webkit-box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 1);
     border: 2px solid black;
-    max-height: 800px;
   }
   @media print {
     main {

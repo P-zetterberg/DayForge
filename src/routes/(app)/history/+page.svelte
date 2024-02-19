@@ -67,7 +67,6 @@
     -webkit-box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 1);
     border: 2px solid black;
     border-radius: var(--border-radius);
-    max-height: 800px;
     margin-top: 2.5em;
     margin-bottom: 2.5em;
     padding: 1em;
@@ -94,7 +93,7 @@
     grid-column: 1/-1;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    background: #d7d7d7;
+    background: #e6e3e3;
     border: 2px solid black;
     color: black;
     text-decoration: none;

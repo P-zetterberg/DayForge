@@ -346,7 +346,7 @@
   }
   .form-container {
     display: grid;
-    gap: 0.75em;
+    gap: 0.45em;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     padding-bottom: 0.5em;
   }

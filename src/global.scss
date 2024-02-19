@@ -49,11 +49,7 @@ main {
   flex: 1;
   margin-bottom: 5em;
   margin-top: 0em;
-}
-@media print {
-  nav,footer,svg {
-    display: none !important;
-  }
+  max-height: 850px;
 }
 .date-time-field input {
   border-radius: calc(var(--border-radius) / 2) !important;
@@ -64,3 +60,14 @@ main {
   padding-top: 0.25em !important;
   padding-bottom: 0.25em !important;
 }
+@media (max-height: 1000px) {
+main {
+  max-height: 750px;
+}
+}
+@media print {
+  nav,footer,svg {
+    display: none !important;
+  }
+}
+
