@@ -27,14 +27,15 @@ export async function POST({ request, locals }) {
       ],
       model: "gpt-4",
       stream: false,
+      temperature: 0,
     });
-    //TODO error från GPT koll igen fake key för ez error
+    // TODO error från GPT koll igen fake key för ez error
 
-    // requestData.completion = {
-    //   message: {
-    //     content: "123",
-    //   },
-    // };
+    requestData.completion = {
+      message: {
+        content: "123",
+      },
+    };
     const completedObj = {
       completion: completion.choices[0],
       metadata: requestData.content,

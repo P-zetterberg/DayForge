@@ -41,7 +41,7 @@
       {@html safeStringGenerator($generatedText)}
     {/if}
 
-    {#if $isLoading && !$generatedText.length}
+    {#if $isLoading}
       <div class="loader-wrapper">
         <Loading />
         <h4>Generating, please wait</h4>

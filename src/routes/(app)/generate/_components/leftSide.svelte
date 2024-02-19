@@ -20,6 +20,7 @@
 
   const handleSubmit = async () => {
     $isLoading = true;
+    $generatedText = [];
     try {
       const res = await fetch("/api", {
         method: "POST",
@@ -239,7 +240,7 @@
       <label
         for="include"
         use:tooltip
-        title="Add places, restaurants etc that you want the AI to try and include. Seperate with a comma for best effect."
+        title="Add places etc that you want the AI to try and include. Seperate with a comma for best effect."
         >Include</label
       >
       <textarea
@@ -255,7 +256,7 @@
       <label
         for="exclude"
         use:tooltip
-        title="Add places, restaurants etc that you want the AI to try and exclude. Seperate with a comma for best effect."
+        title="Add places etc that you want the AI to try and exclude. Seperate with a comma for best effect."
         >Exclude</label
       >
       <textarea
