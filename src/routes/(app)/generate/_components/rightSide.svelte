@@ -1,4 +1,5 @@
 <script>
+  import Clipboard from "clipboard";
   import { clickToCopy } from "$lib/clickToCopy.js";
   import { onMount } from "svelte";
   import {
@@ -18,17 +19,23 @@
       sticking = !entries[0].isIntersecting;
     });
     observer.observe(watcher);
+    let clipboard = new Clipboard(".copy");
+    clipboard.on("success", function (e) {
+      e.clearSelection();
+    });
   });
 </script>
 
+<!-- use:clickToCopy={".generated__text"} -->
 <div class="right-side">
   <div bind:this={watcher} data-scroll-watcher />
-  <!-- {#if $generatedText.length > 0 && !$isLoading} -->
-  <div bind:this={topMenu} class="top-menu" class:sticking>
-    <button class="copy" use:clickToCopy={".generated__text"}>Copy</button>
-    <button class="save" on:click={() => window.print()}>Save</button>
-  </div>
-  <!-- {/if} -->
+  {#if $generatedText.length > 0 && !$isLoading}
+    <div bind:this={topMenu} class="top-menu" class:sticking>
+      <button class="copy" data-clipboard-target=".generated__text">Copy</button
+      >
+      <button class="save" on:click={() => window.print()}>Save</button>
+    </div>
+  {/if}
   <div class="generated__text" id="certificate">
     {#if $generatedText.length > 0}
       {@html safeStringGenerator($generatedText)}
