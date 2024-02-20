@@ -122,6 +122,8 @@
     }
     .content {
       padding: 0;
+      margin: 0;
+      margin-top: 1em;
     }
   }
   /* h2 {

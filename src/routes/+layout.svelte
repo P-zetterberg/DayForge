@@ -1,11 +1,11 @@
 <script>
+  import { supabaseClient } from "$lib/supabase.js";
   import "../global.scss";
   import brandLogo from "../assets/dayforgeai-thicc.svg";
   import Waves from "../assets/waves2.svelte";
   import { page } from "$app/stores";
 
   export let data;
-  data.session = true;
 
   let userCredits = 0;
 </script>
@@ -22,12 +22,12 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
   />
 </svelte:head>
-<nav>
+<nav style={!data?.session ? "justify-content:space-between;" : ""}>
   <a style="line-height: 0;" href={!data?.session ? "/" : "/"}>
     <img src={brandLogo} width="175" alt="brand logo" class="logo" />
   </a>
-  <div class="nav__items">
-    {#if data?.session}
+  {#if data?.session}
+    <div class="nav__items">
       <a
         href="/generate"
         class:active={$page.url.pathname.includes("/generate")}>Generate</a
@@ -40,22 +40,20 @@
         href="/examples"
         class:active={$page.url.pathname.includes("/examples")}>Examples</a
       >
-      <a href="/profile" class:active={$page.url.pathname.includes("/profile")}
-        >Profile</a
-      >
-    {/if}
-  </div>
+      <div class="menu">
+        <span class="level-1">Profile</span>
+        <div class="sub-menu">
+          <a href="/profile/billing" class="level-2">Billing</a>
+          <form action="/logout" method="POST">
+            <button class="level-2 btn" type="submit">Sign out</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  {/if}
   {#if data?.session}
-    <!-- <form action="/logout" method="POST">
-      <button style="height:25px ;" type="submit">Logout</button>
-    </form> -->
-
     <span>{userCredits} {userCredits === 1 ? "credit" : "credits"} left</span>
     <a class="signup buy__credits" href="/buy">Buy credits</a>
-    <!-- <div class="profile">
-      Profile
-      <span class="material-symbols-outlined icon"> expand_more </span>
-    </div> -->
   {:else}
     <div class="nav__ctas">
       <a class="signin" href="/login">Sign in</a>
@@ -124,6 +122,43 @@
     a:first-child {
       align-self: center;
     }
+  }
+  .menu {
+    position: relative;
+    cursor: pointer;
+    &:hover .sub-menu {
+      display: grid;
+      opacity: 1;
+    }
+  }
+  .level-1,
+  .level-2:not(:last-child) {
+    transition: color 0.2s ease-in-out;
+    color: rgba(22, 22, 22, 0.699);
+    font-size: 1em;
+    &:hover {
+      color: black;
+    }
+  }
+  .sub-menu {
+    display: grid;
+    position: absolute;
+    padding: 0.75em;
+    width: max-content;
+    border: 2px solid black;
+    border-radius: calc(var(--border-radius) / 2);
+    background-color: #fcfcfc;
+    transition: opacity 150ms ease-in-out;
+    opacity: 0;
+  }
+  .level-2 {
+    font-size: 1em;
+    &.btn {
+      all: unset;
+    }
+  }
+  .level-2:last-child {
+    color: rgb(207, 50, 50);
   }
   .signup {
     background-color: #f7ca50;

@@ -31,11 +31,11 @@ export const handle = async ({ event, resolve }) => {
 
   const isAuth = await event.locals.getSession();
 
-  // if (event.route.id.startsWith("/(app)")) {
-  //   if (!isAuth) {
-  //     throw redirect(303, "/");
-  //   }
-  // }
+  if (event.route.id.startsWith("/(app)")) {
+    if (!isAuth) {
+      throw redirect(303, "/");
+    }
+  }
 
   return await resolve(event, {
     filterSerializedResponseHeaders(name) {
