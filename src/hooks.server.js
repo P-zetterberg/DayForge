@@ -31,7 +31,7 @@ export const handle = async ({ event, resolve }) => {
 
   const isAuth = await event.locals.getSession();
 
-  if (event.route.id.startsWith("/(app)")) {
+  if (event.route.id?.startsWith("/(app)")) {
     if (!isAuth) {
       throw redirect(303, "/");
     }

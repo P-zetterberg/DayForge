@@ -1,5 +1,6 @@
 <script>
   import { supabaseClient } from "$lib/supabase.js";
+  import { enhance } from "$app/forms";
   import "../global.scss";
   import brandLogo from "../assets/dayforgeai-thicc.svg";
   import Waves from "../assets/waves2.svelte";
@@ -44,7 +45,7 @@
         <span class="level-1">Profile</span>
         <div class="sub-menu">
           <a href="/profile/billing" class="level-2">Billing</a>
-          <form action="/logout" method="POST">
+          <form action="/api/signout" method="POST">
             <button class="level-2 btn" type="submit">Sign out</button>
           </form>
         </div>
