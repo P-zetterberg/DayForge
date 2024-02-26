@@ -3,6 +3,10 @@
   import RightSide from "./_components/rightSide.svelte";
 </script>
 
+<svelte:head>
+  <title>Dayforge | Generate</title>
+</svelte:head>
+
 <main>
   <LeftSide />
   <RightSide />

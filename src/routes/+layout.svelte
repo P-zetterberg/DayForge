@@ -27,7 +27,7 @@
   <a style="line-height: 0;" href={!data?.session ? "/" : "/"}>
     <img src={brandLogo} width="175" alt="brand logo" class="logo" />
   </a>
-  {#if data?.session}
+  {#if data?.session && !$page.url.pathname.includes("password")}
     <div class="nav__items">
       <a
         href="/generate"
@@ -52,10 +52,10 @@
       </div>
     </div>
   {/if}
-  {#if data?.session}
+  {#if data?.session && !$page.url.pathname.includes("password")}
     <span>{userCredits} {userCredits === 1 ? "credit" : "credits"} left</span>
     <a class="signup buy__credits" href="/buy">Buy credits</a>
-  {:else}
+  {:else if !$page.url.pathname.includes("password")}
     <div class="nav__ctas">
       <a class="signin" href="/login">Sign in</a>
       <a class="signup" href="/register">Sign up</a>
@@ -151,6 +151,7 @@
     background-color: #fcfcfc;
     transition: opacity 150ms ease-in-out;
     opacity: 0;
+    z-index: 2000;
   }
   .level-2 {
     font-size: 1em;

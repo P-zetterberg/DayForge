@@ -1,58 +1,65 @@
 <script>
   import { supabaseClient } from "$lib/supabase";
-  import img from "../../assets/google2.png";
-  import imgApple from "../../assets/apple.png";
   import { onMount } from "svelte";
   import { enhance } from "$app/forms";
 
-  let email = "";
   let password = "";
+  let repeatPassword = "";
+  $: istheSame = (pw) => {
+    if (pw.length === 0 && repeatPassword.length === 0) return false;
+
+    return pw === repeatPassword;
+  };
+
+  onMount(() => {
+    const { data } = supabaseClient.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === "PASSWORD_RECOVERY") {
+          console.log(session, event, data);
+        }
+
+        data.subscription.unsubscribe();
+      }
+    );
+  });
 </script>
+
+<svelte:head>
+  <title>Dayforge | Update password</title>
+</svelte:head>
 
 <main>
   <div class="form__container">
-    <form class="login-form" action="?/login" method="POST">
-      <h1>Sign in</h1>
+    <form class="form" action="?/update" method="POST" use:enhance>
+      <h1>Update password</h1>
       <div class="form__item">
-        <label for="email">Email</label>
+        <label for="password">New password</label>
         <input
           class="form__input"
           required
-          type="email"
-          id="email"
-          name="email"
-          bind:value={email}
-        />
-      </div>
-      <div class="form__item">
-        <label for="password">Password</label>
-        <input
-          class="form__input"
-          required
+          minlength="6"
           type="password"
           id="password"
           name="password"
           bind:value={password}
         />
-        <a href="/reset-password" class="forgot">Forgot password?</a>
       </div>
-      <button class="submit" type="submit">Sign in</button>
-    </form>
-
-    <form class="provider-form" method="POST">
-      <button class="provider-btn apple" formaction="?/login&provider=apple"
-        ><img src={imgApple} height="40" alt="apple icon" /><span
-          >Continue with Apple</span
-        ></button
+      <div class="form__item">
+        <label for="password_repeat">Repeat password</label>
+        <input
+          class="form__input"
+          required
+          minlength="6"
+          type="password"
+          id="password_repeat"
+          name="password_repeat"
+          bind:value={repeatPassword}
+        />
+      </div>
+      <button disabled={!istheSame(password)} class="submit" type="submit"
+        >Update password</button
       >
-      <button class="provider-btn google" formaction="?/login&provider=google"
-        ><img src={img} alt="google icon" /></button
-      >
     </form>
-
-    <span class="login__redirect"
-      >Don't have an account? <a href="/register">Sign up here</a></span
-    >
   </div>
 </main>
 
@@ -62,9 +69,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 999;
+    z-index: 500;
     position: relative;
-    .login-form {
+    .form {
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -74,9 +81,10 @@
   }
   .form__container {
     width: 400px;
-    height: 500px;
+    height: auto;
     background-color: #fcfcfc;
     padding: 1em;
+    padding-bottom: 1.4em;
     display: flex;
     flex-direction: column;
     border-radius: var(--border-radius);
@@ -127,7 +135,7 @@
     height: 45px;
     border-radius: var(--border-radius);
     text-transform: uppercase;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.1em;
     font-weight: 600;
     cursor: pointer;
     text-align: center;
@@ -167,8 +175,6 @@
     }
   }
   .forgot {
-    all: unset;
-    cursor: pointer;
     font-size: 14px;
   }
   .provider-form {

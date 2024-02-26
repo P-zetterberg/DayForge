@@ -47,4 +47,15 @@ export const actions = {
 
     redirect(303, "/generate");
   },
+  reset_password: async ({ request, locals }) => {
+    const { data, error: err } =
+      await locals.supabase.auth.resetPasswordForEmail("pontus@zetterberg.io", {
+        redirectTo: "http://localhost:5173/auth/callback?next=/update-password",
+      });
+    if (err) {
+      return fail(500, {
+        error: "Server error. Please try again later.",
+      });
+    }
+  },
 };

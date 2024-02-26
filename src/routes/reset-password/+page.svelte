@@ -1,58 +1,28 @@
 <script>
-  import { supabaseClient } from "$lib/supabase";
-  import img from "../../assets/google2.png";
-  import imgApple from "../../assets/apple.png";
-  import { onMount } from "svelte";
   import { enhance } from "$app/forms";
 
   let email = "";
-  let password = "";
 </script>
 
 <main>
   <div class="form__container">
-    <form class="login-form" action="?/login" method="POST">
-      <h1>Sign in</h1>
+    <form class="form" action="?/reset_password" method="POST" use:enhance>
+      <h1>Reset password</h1>
       <div class="form__item">
-        <label for="email">Email</label>
+        <label for="password">Email</label>
         <input
           class="form__input"
           required
-          type="email"
-          id="email"
-          name="email"
+          type="Email"
+          id="Email"
+          name="Email"
           bind:value={email}
         />
       </div>
-      <div class="form__item">
-        <label for="password">Password</label>
-        <input
-          class="form__input"
-          required
-          type="password"
-          id="password"
-          name="password"
-          bind:value={password}
-        />
-        <a href="/reset-password" class="forgot">Forgot password?</a>
-      </div>
-      <button class="submit" type="submit">Sign in</button>
-    </form>
-
-    <form class="provider-form" method="POST">
-      <button class="provider-btn apple" formaction="?/login&provider=apple"
-        ><img src={imgApple} height="40" alt="apple icon" /><span
-          >Continue with Apple</span
-        ></button
-      >
-      <button class="provider-btn google" formaction="?/login&provider=google"
-        ><img src={img} alt="google icon" /></button
+      <button disabled={email.length === 0} class="submit" type="submit"
+        >Reset password</button
       >
     </form>
-
-    <span class="login__redirect"
-      >Don't have an account? <a href="/register">Sign up here</a></span
-    >
   </div>
 </main>
 
@@ -62,9 +32,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 999;
+    z-index: 500;
     position: relative;
-    .login-form {
+    .form {
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -74,9 +44,10 @@
   }
   .form__container {
     width: 400px;
-    height: 500px;
+    height: auto;
     background-color: #fcfcfc;
     padding: 1em;
+    padding-bottom: 1.4em;
     display: flex;
     flex-direction: column;
     border-radius: var(--border-radius);
@@ -90,12 +61,6 @@
   .form__item {
     display: flex;
     flex-direction: column;
-
-    a {
-      text-decoration: none;
-      margin-top: 0.2em;
-      color: rgba(22, 22, 22, 0.699);
-    }
   }
   .form__input {
     box-sizing: border-box;
@@ -127,7 +92,7 @@
     height: 45px;
     border-radius: var(--border-radius);
     text-transform: uppercase;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.1em;
     font-weight: 600;
     cursor: pointer;
     text-align: center;
@@ -155,43 +120,6 @@
     }
     &:active:not(:disabled) {
       scale: 1.02;
-    }
-  }
-  .login__redirect {
-    text-align: center;
-    margin-top: 1em;
-    a {
-      opacity: 1;
-      color: rgb(22, 22, 22);
-      font-weight: 600;
-    }
-  }
-  .forgot {
-    all: unset;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  .provider-form {
-    display: grid;
-    gap: 0.5em;
-    margin-top: 1em;
-    margin-inline: auto;
-  }
-  .provider-btn {
-    all: unset;
-    cursor: pointer;
-    &.apple {
-      display: flex;
-      border: 1px solid grey;
-      border-radius: 4px;
-      padding-right: 0.3em;
-
-      span {
-        align-self: center;
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: #1f1f1fe3;
-      }
     }
   }
 </style>
