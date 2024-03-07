@@ -50,7 +50,7 @@
       <div class="help-text-container">
         <div class="disclaimer">
           The generated day should be used as a baseline and the information
-          should always be double checked!
+          should always be double checked! <br />
         </div>
         <h3 class="">How to use</h3>
         <ol>
@@ -64,7 +64,9 @@
             complete & enjoy your generated day!
           </li>
         </ol>
-        <span><b>Tip: </b>Hover over any label to get a helpful tooltip.</span>
+        <span><b>Tip 1: </b>Hover over any label to get a helpful tooltip.</span
+        >
+        <span><b>Tip 2: </b>Medium to large cities give the best results.</span>
       </div>
     {/if}
   </div>
@@ -132,6 +134,7 @@
     justify-content: center;
     span {
       text-decoration: underline;
+      margin-block: 0.5em;
     }
   }
   @media print {
