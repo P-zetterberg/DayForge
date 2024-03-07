@@ -35,9 +35,9 @@
       $generatedText = parsed.message.content;
       $isLoading = false;
     } catch (error) {
-      console.log(error); // kolla vid throw & flytta detta till +page.server.js
+      console.log(error); //TODO kolla vid throw & flytta detta till +page.server.js
       //TODO error alert toast
-      console.log("HEJ");
+      console.log("Something went wrong! L-side");
     }
   };
   function handleTimeFormat(format) {
@@ -50,6 +50,7 @@
   <label for="rad-container">Clock format</label>
   <div class="rad-container">
     <button
+      disabled={$isLoading}
       class="rad-button"
       class:active={timeFormat === "12"}
       on:click={() => handleTimeFormat("12")}
@@ -57,6 +58,7 @@
       12H
     </button>
     <button
+      disabled={$isLoading}
       class="rad-button"
       class:active={timeFormat === "24"}
       on:click={() => handleTimeFormat("24")}
@@ -78,6 +80,7 @@
       >
       <DateInput
         format="yyyy-MM-dd"
+        disabled={$isLoading}
         class="input"
         min={new Date()}
         required
@@ -93,6 +96,7 @@
       >
       <select
         bind:value={formData.country}
+        disabled={$isLoading}
         required
         name="country"
         id=""
@@ -115,6 +119,7 @@
         >City*</label
       >
       <input
+        disabled={$isLoading}
         required
         type="text"
         name="city"
@@ -130,6 +135,7 @@
         >Area*</label
       >
       <input
+        disabled={$isLoading}
         required
         type="text"
         name="area"
@@ -145,6 +151,7 @@
         >Day start</label
       >
       <select
+        disabled={$isLoading}
         name="start"
         class="input"
         on:change={(e) => (formData.dayStart = e.target.value)}
@@ -164,6 +171,7 @@
         >Day end</label
       >
       <select
+        disabled={$isLoading}
         name="end"
         class="input"
         on:change={(e) => (formData.dayEnd = e.target.value)}
@@ -197,6 +205,7 @@
         use:tooltip>Group size</label
       >
       <input
+        disabled={$isLoading}
         bind:value={formData.groupSize}
         min="1"
         max="5"
@@ -244,6 +253,7 @@
         >Include</label
       >
       <textarea
+        disabled={$isLoading}
         spellcheck="false"
         name="include"
         id=""
@@ -260,6 +270,7 @@
         >Exclude</label
       >
       <textarea
+        disabled={$isLoading}
         spellcheck="false"
         name="exclude"
         id=""
@@ -270,6 +281,7 @@
     </div>
     <div style="grid-column: 1/3">
       <input
+        disabled={$isLoading}
         required
         class="checkbox"
         type="checkbox"
@@ -278,7 +290,12 @@
       />
       <label for="terms">I agree to the terms of service.</label>
     </div>
-    <input type="submit" value="Generate" class="submit-btn" />
+    <input
+      type="submit"
+      value="Generate"
+      class="submit-btn"
+      disabled={$isLoading}
+    />
   </form>
 </div>
 
@@ -301,6 +318,9 @@
       cursor: pointer;
       &.active {
         border: 2px solid black;
+      }
+      &[disabled] {
+        opacity: 0.5;
       }
     }
   }
@@ -332,6 +352,9 @@
       &:focus {
         outline: none;
         box-shadow: 0 0 0 0.125em rgba(72, 95, 199, 0.466);
+      }
+      &[disabled] {
+        opacity: 0.5;
       }
     }
     &.right {
@@ -378,13 +401,17 @@
     position: relative;
     top: 0;
     left: 0;
-    &:hover {
+    &:hover:enabled {
       top: 4px;
       left: 4px;
       box-shadow: 1px 1px 0 #000;
       transition-property: box-shadow, top, left;
       transition-duration: 0.2s;
       transition-timing-function: ease-in-out;
+    }
+    &[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
   h2 {

@@ -1,6 +1,5 @@
 import { AuthApiError } from "@supabase/supabase-js";
-import { fail } from "@sveltejs/kit";
-import { redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 
 export async function load({ locals }) {
   return {
@@ -17,11 +16,9 @@ export const actions = {
     });
 
     if (err) {
-      return fail(500, {
-        message: "Something went wrong",
-      });
+      return fail(500, "Something went wrong");
     }
 
-    redirect(303, "/generate");
+    //redirect(303, "/generate");
   },
 };
