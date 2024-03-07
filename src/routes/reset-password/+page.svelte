@@ -1,12 +1,31 @@
 <script>
   import { enhance } from "$app/forms";
+  import toast, { Toaster } from "svelte-french-toast";
 
   let email = "";
+
+  const onSubmit = () => {
+    return ({ result, update }) => {
+      if (result.type === "success") {
+        toast.success("Reset email have been sent!", {
+          duration: 3000,
+        });
+      } else {
+        update();
+      }
+    };
+  };
 </script>
 
 <main>
+  <Toaster />
   <div class="form__container">
-    <form class="form" action="?/reset_password" method="POST" use:enhance>
+    <form
+      class="form"
+      action="?/reset_password"
+      method="POST"
+      use:enhance={onSubmit}
+    >
       <h1>Reset password</h1>
       <div class="form__item">
         <label for="password">Email</label>
@@ -81,8 +100,8 @@
     margin-bottom: 0.2em;
   }
   input:focus {
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    outline: transparent;
+    outline: none;
+    box-shadow: 0 0 0 0.125em rgba(72, 95, 199, 0.466);
   }
   .submit {
     all: unset;
@@ -105,7 +124,7 @@
     position: relative;
     top: 0;
     left: 0;
-    &:hover {
+    &:hover:enabled {
       top: 4px;
       left: 4px;
       box-shadow: 1px 1px 0 #000;
