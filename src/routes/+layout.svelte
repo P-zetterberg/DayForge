@@ -1,6 +1,5 @@
 <script>
-  import { supabaseClient } from "$lib/supabase.js";
-  import { enhance } from "$app/forms";
+  import { Toaster } from "svelte-french-toast";
   import "../global.scss";
   import brandLogo from "../assets/dayforgeai-thicc.svg";
   import Waves from "../assets/waves2.svelte";
@@ -64,7 +63,7 @@
 </nav>
 
 <slot />
-
+<Toaster />
 <Waves />
 
 <style lang="scss">

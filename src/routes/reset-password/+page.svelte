@@ -1,6 +1,6 @@
 <script>
   import { enhance } from "$app/forms";
-  import toast, { Toaster } from "svelte-french-toast";
+  import toast from "svelte-french-toast";
 
   let email = "";
 
@@ -18,7 +18,6 @@
 </script>
 
 <main>
-  <Toaster />
   <div class="form__container">
     <form
       class="form"
