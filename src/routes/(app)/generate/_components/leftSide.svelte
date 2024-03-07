@@ -378,9 +378,6 @@
     resize: vertical;
     min-height: 73px;
   }
-  input[type="radio"] {
-    accent-color: #232323;
-  }
 
   .submit-btn {
     background-color: var(--primary-color);

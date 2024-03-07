@@ -128,12 +128,6 @@
   .form__item {
     display: flex;
     flex-direction: column;
-
-    a {
-      text-decoration: none;
-      margin-top: 0.2em;
-      color: rgba(22, 22, 22, 0.699);
-    }
   }
   .form__input {
     box-sizing: border-box;
@@ -195,41 +189,7 @@
       scale: 1.02;
     }
   }
-  .login__redirect {
-    text-align: center;
-    margin-top: 1em;
-    a {
-      opacity: 1;
-      color: rgb(22, 22, 22);
-      font-weight: 600;
-    }
-  }
-  .forgot {
-    font-size: 14px;
-  }
-  .provider-form {
-    display: grid;
-    gap: 0.5em;
-    margin-top: 1em;
-    margin-inline: auto;
-  }
-  .provider-btn {
-    all: unset;
-    cursor: pointer;
-    &.apple {
-      display: flex;
-      border: 1px solid grey;
-      border-radius: 4px;
-      padding-right: 0.3em;
 
-      span {
-        align-self: center;
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: #1f1f1fe3;
-      }
-    }
-  }
   @keyframes lineAnim {
     0% {
       left: -20%;
